@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Current Date</title>
+</head>
+<body>
+    <h1>Current Date</h1>
+    <p>The current date is: {{ current_date }}</p>
+    <p>Sum of a calculation: {{sum}}</p>
+</body>
+<head>
+    <title>My Form</title>
+</head>
+<body>
+    <h1>My Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
