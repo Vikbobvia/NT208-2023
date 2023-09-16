@@ -41,19 +41,20 @@ def form_view(request):
         get_data_action = request.GET.get('get_data')
         print(get_data_action)
         print(latest_text)
+        
+        if get_data_action is not None:
+            if "latest" in get_data_action:  
+                try:  
+                    latest_text = Blog_Database.last().description
+                except AttributeError:
+                    pass
+            elif "clear" in get_data_action:
+                # print("False in latest text")
+                latest_text = ""
 
-        if "latest" in get_data_action:  
-            try:  
-                latest_text = Blog_Database.last().description
-            except AttributeError:
-                pass
-        elif "clear" in get_data_action:
-            # print("False in latest text")
-            latest_text = ""
-
-        elif "delete" in get_data_action:
-            Blog_Database.delete()
-        print("Success button")
+            elif "delete" in get_data_action:
+                Blog_Database.delete()
+            print("Success button")
 
 
     else:
