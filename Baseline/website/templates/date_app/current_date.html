@@ -16,7 +16,24 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <!-- <input type="text" name="output_field" value="{{ form.cleaned_data.output_field }}"> -->
+        <p>Output: {{ output_data }}</p>
+        <button type="submit" name="action" value="save_output">Save</button>
+        <button type="submit" name="action" value="get_output">Only output</button>
+        <button type="submit" name="action" value="delete_output">Delete output</button>
+        <button type="submit" name="action" value="delete_all">Delete all</button>
+        
     </form>
+
+    <p>Latest text: {{ latest_text }} </p>
+
+    <form method="GET">
+        {% csrf_token %}
+        
+        <button type="submit" name="get_data" value="latest">Get latest data</button>
+        <button type="submit" name="get_data" value="clear">Clear latest data</button>
+        <button type="submit" name="get_data" value="delete">Delete all database</button>
+    </form>
+
 </body>
 </html>
