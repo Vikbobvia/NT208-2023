@@ -1,0 +1,7 @@
+<!-- blog/templates/blog/blog_list.html -->
+<h1>List of Blog Posts</h1>
+<ul>
+    {% for post in posts %}
+        <li><a href="{% url 'blog_detail' post.pk %}">{{ post.date }}</a></li>
+    {% endfor %}
+</ul>

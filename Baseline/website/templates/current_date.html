@@ -35,5 +35,13 @@
         <button type="submit" name="get_data" value="delete">Delete all database</button>
     </form>
 
+    <h1>List of Links</h1>
+    <ul>
+        {% for link in links %}
+            <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+        {% endfor %}
+    </ul>
+
+
 </body>
 </html>

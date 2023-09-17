@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import MyForm
 from .models import Text_table
+from django.views.generic import ListView, DetailView
 # Create your views here.
 import datetime
 
@@ -13,6 +14,7 @@ def form_view(request):
     print(request.method)
     
     if request.method == 'POST':
+
         
         form = MyForm(request.POST)
 
@@ -27,10 +29,10 @@ def form_view(request):
                 output_data = form.cleaned_data['input_field']
             elif action == 'save_output':
                 output_data = form.cleaned_data['input_field']
-                post = Text_table(date = datetime.datetime.now(), description = output_data )
+                post = Text_table(date = datetime.datetime.now(), description = output_data 
+                                  ,title = datetime.datetime.now())
                 post.save() 
                 print("Save successful")
-    
     elif request.method == 'GET':
 
         Blog_Database = Text_table.objects.all()
@@ -55,22 +57,47 @@ def form_view(request):
             elif "delete" in get_data_action:
                 Blog_Database.delete()
             print("Success button")
-
-
     else:
         form = MyForm()
+
+
+    links = [
+        {'url': '../..', 'text': 'This website'},
+        {'url': '../blogs_list', 'text': 'List of blog'},
+        # {'url': '../blogs_details/<int:pk>', 'text': 'Detail'},
+
+    ]
+
     
-    print("Result of latest text", latest_text)
+
+    
     context = {
         'form' : form,
         'sum' : 1,
         'current_date' : datetime.datetime.now(),
         'output_data' : output_data,
-        'latest_text' : latest_text
+        'latest_text' : latest_text,
+        'links' : links
     }
     
-    return render(request, 'date_app/current_date.html', context)
+    return render(request, 'current_date.html', context)
 
 
 def intro (request) :
-    return render (request, 'date_app/intro.html')
+    return render (request, 'intro.html')
+
+
+
+
+class BlogListView(ListView):
+    model = Text_table
+    template_name = 'blog/blog_list.html'
+    context_object_name = 'posts'
+    ordering = ['date']
+
+
+
+class BlogDetailView(DetailView):
+    model = Text_table
+    template_name = 'blog/blog_detail.html'
+    context_object_name = 'post'
