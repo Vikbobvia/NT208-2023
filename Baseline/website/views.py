@@ -20,21 +20,31 @@ def form_view(request):
 
         if form.is_valid() :#and 'submit' in request.POST:
             action = request.POST.get('action')
+
             if action == 'delete_output':
-                output_data = ""
+                description_data = ""
+
             elif action == 'delete_all':
                 form = MyForm()
-                output_data = ""
-            elif action == "get_output":
-                output_data = form.cleaned_data['input_field']
-            elif action == 'save_output':
-                output_data = form.cleaned_data['input_field']
-                post = Text_table(date = datetime.datetime.now(), description = output_data 
-                                  ,title = datetime.datetime.now())
-                post.save() 
-                print("Save successful")
-    elif request.method == 'GET':
+                description_data = ""
 
+            elif action == "get_output":
+                output_data = form.cleaned_data['title_input']
+
+            elif action == 'save_output':
+                try :
+                    title_data = form.cleaned_data['title_input']
+                    description_data = form.cleaned_data['description_input']
+                    post = Text_table(  date = datetime.datetime.now(),
+                                        description = description_data,
+                                        title = title_data)
+                    post.save() 
+                    print("Save successful")
+                except UnboundLocalError:
+                    pass
+
+    elif request.method == 'GET':
+        print(Text_table.objects.count())
         Blog_Database = Text_table.objects.all()
 
         form = MyForm(request.GET)
@@ -73,7 +83,7 @@ def form_view(request):
     
     context = {
         'form' : form,
-        'sum' : 1,
+        'Current_blog_number' : Text_table.objects.count(),
         'current_date' : datetime.datetime.now(),
         'output_data' : output_data,
         'latest_text' : latest_text,
@@ -101,3 +111,14 @@ class BlogDetailView(DetailView):
     model = Text_table
     template_name = 'blog/blog_detail.html'
     context_object_name = 'post'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Add extra variables to the context dictionary
+        context['date'] = datetime.datetime.now()
+
+        return context
+
+  

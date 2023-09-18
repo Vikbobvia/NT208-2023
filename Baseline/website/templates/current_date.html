@@ -5,8 +5,8 @@
 </head>
 <body>
     <h1>Current Date</h1>
-    <p>The current date is: {{ current_date }}</p>
-    <p>Sum of a calculation: {{sum}}</p>
+    <p>The current date is {{ current_date }}</p>
+    <p>Number of blogs is {{Current_blog_number}}</p>
 </body>
 <head>
     <title>My Form</title>
@@ -16,6 +16,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+
+ 
         <!-- <input type="text" name="output_field" value="{{ form.cleaned_data.output_field }}"> -->
         <p>Output: {{ output_data }}</p>
         <button type="submit" name="action" value="save_output">Save</button>

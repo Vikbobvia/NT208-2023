@@ -1,9 +1,15 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 
 class Text_table(models.Model):
     date = models.CharField(max_length=30)
     description = models.CharField(max_length=30)
+    title = models.CharField(default="123", max_length=200)
     id = models.AutoField(primary_key=True)
-    # title = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
+
+    
